@@ -9,8 +9,10 @@ Shared [gh-aw](https://github.github.com/gh-aw/) workflows for notglossy reposit
 ## Add to a repository
 
 ```sh
-gh aw add notglossy/agentic-workflows/pr-review@v1 --approve   # --approve: first use of the AI_API_KEY secret
-gh secret set AI_API_KEY --repo notglossy/<repo>              # OpenRouter key
+gh aw add notglossy/agentic-workflows/pr-review@v1
+gh aw compile pr-review --approve                   # approve the new AI_API_KEY secret (first install only)
+gh aw update pr-review                              # writes .github/aw/actions-lock.json (container pins)
+gh secret set AI_API_KEY --repo notglossy/<repo>    # OpenRouter key
 git add .github .gitattributes && git commit -m "ci: add AI PR review"
 ```
 
