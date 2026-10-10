@@ -9,7 +9,7 @@ Shared [gh-aw](https://github.github.com/gh-aw/) workflows for notglossy reposit
 ## Add to a repository
 
 ```sh
-gh aw add notglossy/agentic-workflows/pr-review@v1
+gh aw add notglossy/agentic-workflows/pr-review@main
 gh aw compile pr-review --approve                   # approve the new AI_API_KEY secret (first install only)
 gh aw update pr-review                              # writes .github/aw/actions-lock.json (container pins)
 gh secret set AI_API_KEY --repo notglossy/<repo>    # OpenRouter key
@@ -32,7 +32,10 @@ Optional, per repository:
 
 ## Update
 
-Change the workflow here, then tag a release (`v1.1.0`, ...; move `v1` if you track the major tag). In each repository:
+`main` is the release channel. `gh aw add` records the commit it installed as a SHA in the workflow's `source:`
+field, and `gh aw update` then moves to the newest commit on `main` that is at least 3 days old (gh-aw's cooldown).
+Tags are not followed: putting a tag in `source:` makes `update` look for GitHub Releases instead. So push finished
+changes to `main`, and work on a branch until then. In each repository:
 
 ```sh
 gh aw update pr-review     # 3-way merge keeps local edits, then recompiles
