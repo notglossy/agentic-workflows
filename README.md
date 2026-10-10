@@ -1,0 +1,38 @@
+# agentic-workflows
+
+Shared [gh-aw](https://github.github.com/gh-aw/) workflows for notglossy repositories.
+
+| Workflow | What it does |
+|---|---|
+| [`pr-review`](workflows/pr-review.md) | Reviews same-repo, non-draft PRs for bugs, security and over-engineering. Copilot CLI in gh-aw's sandbox, inference via OpenRouter (BYOK). Posts inline comments plus one `COMMENT` review. |
+
+## Add to a repository
+
+```sh
+gh aw add notglossy/agentic-workflows/pr-review@v1 --approve   # --approve: first use of the AI_API_KEY secret
+gh secret set AI_API_KEY --repo notglossy/<repo>              # OpenRouter key
+git add .github .gitattributes && git commit -m "ci: add AI PR review"
+```
+
+It also writes `.gitattributes` (lock files marked generated), `.github/skills/agentic-workflows/` (a skill for
+coding agents) and `.vscode/settings.json`; keep or drop them as you like. The files the review needs:
+
+- `.github/workflows/pr-review.md`: the source, with a `source:` field pointing back here
+- `.github/workflows/pr-review.lock.yml`: the compiled workflow Actions runs (never edit by hand)
+- `.github/aw/actions-lock.json`: pinned action SHAs for reproducible compiles
+
+Optional, per repository:
+
+- `.github/ai-review-instructions.md`: project context and settled decisions, appended to the prompt at run time.
+  Start from [`examples/ai-review-instructions.md`](examples/ai-review-instructions.md).
+- `AI_MODEL` repository variable: any OpenRouter model id with tool calling and streaming (default
+  `google/gemini-3.8-flash`). If it costs more than the `models.default-ai-credits-pricing` rate, raise that too.
+
+## Update
+
+Change the workflow here, then tag a release (`v1.1.0`, ...; move `v1` if you track the major tag). In each repository:
+
+```sh
+gh aw update pr-review     # 3-way merge keeps local edits, then recompiles
+git add .github && git commit -m "ci: update AI PR review"
+```
