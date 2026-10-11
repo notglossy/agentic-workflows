@@ -1,0 +1,53 @@
+# Issue form for feature requests. The section labels match the headings the feature-triage
+# workflow looks for; keep them in sync if you rename one.
+name: Feature request
+description: Suggest a new feature or a change to existing behaviour.
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        Thanks for the suggestion. Describe the problem first: a clear problem gets a better
+        answer than a detailed solution. A maintainer may run an automated feasibility check
+        on this issue; it only advises, and a person makes the decision.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What are you trying to do, and what gets in the way today?
+      placeholder: When I ..., I have to ..., because ...
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: What would you like to happen? Concrete behaviour beats general direction.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Workarounds you use now, or other approaches you thought about.
+    validations:
+      required: false
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Scope
+      description: Who would this affect?
+      options:
+        - Just my use case
+        - A common workflow for many users
+        - Everyone (changes default behaviour)
+        - Not sure
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Links, screenshots, examples from other tools.
+    validations:
+      required: false
